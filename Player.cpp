@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Player::Player(std::string name) {
+Player::Player(std::string name) {  
 	this->m_name = name;
 }
 
@@ -21,17 +21,17 @@ Player :: ~Player() {
 
 HumanPlayer::HumanPlayer(std::string name) : Player(name) {} //constructor
 
-bool HumanPlayer::isInteractive() const {
+bool HumanPlayer::isInteractive() const { // return true if people (this player) make their own moves
 	return true;
 }
 
-int HumanPlayer::chooseMove(const Board& b, Side s) const {
+int HumanPlayer::chooseMove(const Board& b, Side s) const { // select which hole to pck of beans and play the game
 	int hole = -1;
 	do {
 		cout << "Please choose a hole from 1 to " << b.holes() << endl;
 		cin >> hole;
 
-	} while ((hole <= 0 || hole > b.holes()) || (b.beans(s, hole)) <= 0);
+	} while ((hole <= 0 || hole > b.holes()) || (b.beans(s, hole)) <= 0); // make sure they selected a valid hole
 
 	return hole;
 }
@@ -64,7 +64,7 @@ int SmartPlayer::chooseMove(const Board& b, Side s) const {
 
 
 
-    if (b.beansInPlay(s) == 0)
+    if (b.beansInPlay(s) == 0) // make sure there are beans on their side of the board
     {
         return -1;
     }
@@ -78,14 +78,14 @@ int SmartPlayer::chooseMove(const Board& b, Side s) const {
 		if (b.beans(s, i) > 0)
 		{
             
-			Board tBoard(b);
+			Board tBoard(b); // make a temporary board
 			bool canSow = sowable(tBoard, i, s); //sow the beans and determine pot value
 			bool maxTurn;
 
 			if (canSow)
 			{
 				maxTurn = true;
-				newVal = minmax(tBoard, s, maxTurn, m_depth, jt);
+				newVal = minmax(tBoard, s, maxTurn, m_depth, jt); // m_depth is 7
 			}
 			else
 			{
@@ -96,7 +96,7 @@ int SmartPlayer::chooseMove(const Board& b, Side s) const {
 			if (newVal >= highestVal)
 			{
 				highestVal = newVal;
-				bestHole = i;
+				bestHole = i; // if a hole provides a better outcome many move in the future, set this playing hole to that one
 			}
 		}
 	}
@@ -120,7 +120,7 @@ bool SmartPlayer::sowable(Board& board, int move, Side side) const
 	}
 
 	//do capture
-	if (side == endSide && board.beans(endSide, endHole) == 1 && board.beans(opponent(endSide), endHole) > 0) // do a capturre
+	if (side == endSide && board.beans(endSide, endHole) == 1 && board.beans(opponent(endSide), endHole) > 0) // do a capture
 	{
 		board.moveToPot(side, endHole, side);
 		board.moveToPot(opponent(side), endHole, side);
@@ -159,7 +159,8 @@ int SmartPlayer::minmax(const Board& board, Side side, bool isMax, int depth, Ju
     }
     if (jt.elapsed())
     {
-        
+        //cerr << "time\n";
+        return eval(board, side);
     }
 
     if (isMax)
@@ -179,7 +180,7 @@ int SmartPlayer::minmax(const Board& board, Side side, bool isMax, int depth, Ju
                 int newMaxHole;
                 if (jt.elapsed())
                 {
-                   
+                    return eval(board, side);
                 }
                 if (canSowAgain) // can take another turn
                 {
@@ -205,7 +206,7 @@ int SmartPlayer::minmax(const Board& board, Side side, bool isMax, int depth, Ju
         {
             if (jt.elapsed())
             {
-                
+                return eval(board, side);
             }
             if (board.beans(side, i) > 0)
             {
@@ -215,7 +216,7 @@ int SmartPlayer::minmax(const Board& board, Side side, bool isMax, int depth, Ju
                 int newMinHole;
                 if (jt.elapsed())
                 {
-                    
+                    return eval(board, side);
                 }
                 if (canSowAgain) // if you can take another turn
                 {

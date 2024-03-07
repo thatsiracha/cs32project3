@@ -33,9 +33,9 @@ int main()
 
 	Board b(3, 3);
 	HumanPlayer hp("Suraj");
-	BadPlayer bp("Computer");
+	SmartPlayer sp("Computer");
 
-	Game mancala(b, &hp, &bp);
+	Game mancala(b, &hp, &sp);
 
 	mancala.play();
 

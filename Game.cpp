@@ -131,8 +131,8 @@ void Game::play() {
 	cout << endl;
 	while (!over)
 	{
-		cerr << "--------------------------------------" << endl;
-		cerr << endl;
+		cout << "--------------------------------------" << endl;
+		cout << endl;
 		if (m_turn == SOUTH)
 		{
 			cout << "It's SOUTH's turn!" << endl;
@@ -180,6 +180,6 @@ void Game::play() {
 
 }
 
-int Game :: beans(Side s, int hole) const {
+int Game :: beans(Side s, int hole) const { // return num of beans in specified hole
 	return board.beans(s, hole);
 }

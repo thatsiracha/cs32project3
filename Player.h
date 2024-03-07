@@ -5,7 +5,7 @@
 #include "Side.h"
 #include "Board.h"
 
-class Player {
+class Player { //abstract class
 private:
 	std::string m_name;
 public:
