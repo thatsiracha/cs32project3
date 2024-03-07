@@ -1,7 +1,7 @@
 #ifndef SIDE_H
 #define SIDE_H
 
-enum Side { NORTH, SOUTH };
+enum Side { NORTH, SOUTH }; // NORTH is 1, SOUTH is 0
 
 const int NSIDES = 2;
 const int POT = 0;
@@ -9,7 +9,7 @@ const int POT = 0;
 inline
 Side opponent(Side s)
 {
-	return Side(NSIDES - 1 - s);
+	return Side(NSIDES - 1 - s); // returns opposite side
 }
 
 
