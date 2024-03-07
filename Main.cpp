@@ -28,5 +28,5 @@ void doPlayerTests()
 int main()
 {
 	doPlayerTests();
-	cout << "Passed all tests" << endl;
+	cout << "Passed all tests" << endl; //change this
 }
