@@ -12,9 +12,9 @@ Board::Board(int nHoles, int nInitialBeansPerHole) {
 
 	this->m_Holes = nHoles;
 	this->m_InitialBeansPerHole = nInitialBeansPerHole;
-	this->kalah = vector<vector<int>>(2, vector<int>(nHoles, nInitialBeansPerHole));
-	this->kalah[0].insert(kalah[0].begin(), POT);
-	this->kalah[1].insert(kalah[1].begin(), POT);
+	this->kalah = vector<vector<int>>(2, vector<int>(nHoles, nInitialBeansPerHole)); // an array to represent the board: 2 rows, input number of holes per row
+	this->kalah[0].insert(kalah[0].begin(), POT); // POT is 0
+	this->kalah[1].insert(kalah[1].begin(), POT); 
 	//this->kalah[0].push_back(0); // North's pot
 	//this->kalah[1].push_back(0); // South's pot
 }
@@ -25,11 +25,11 @@ Board::Board(const Board& other) : kalah(other.kalah) // copy constructor
 	m_InitialBeansPerHole = other.m_InitialBeansPerHole;
 }
 
-int Board::holes() const {
+int Board::holes() const { // return number of holes per side
 	return m_Holes;
 }
 
-int Board::beans(Side s, int hole) const {
+int Board::beans(Side s, int hole) const { // return number of beans in the specified hole
 	if (hole == 0) { //for the pot
 		return kalah[s][hole];
 	}
@@ -42,7 +42,7 @@ int Board::beans(Side s, int hole) const {
 	}
 }
 
-int Board::beansInPlay(Side s) const {
+int Board::beansInPlay(Side s) const { // returns total number of beans on the specified side
 	int total = 0;
 
 	for (int i = 1; i <= holes(); i++)
@@ -53,7 +53,7 @@ int Board::beansInPlay(Side s) const {
 	return total;
 }
 
-int Board::totalBeans() const {
+int Board::totalBeans() const { // returns total beans on the board
 	int totalB = 0;
 
 	for (int i = 0; i <= 1; i++)
@@ -67,7 +67,7 @@ int Board::totalBeans() const {
 	return totalB;
 }
 
-bool Board::sow(Side s, int hole, Side& endSide, int& endHole) {
+bool Board::sow(Side s, int hole, Side& endSide, int& endHole) { // once a hole is chosen, sow those beans according to the rules of the game
 	//If the hole indicated by (s,hole) is empty or invalid or a pot, this function returns false without changing anything.
 	if ((s != NORTH && s != SOUTH) || (hole > holes() || hole <= 0))
 	{
@@ -81,7 +81,7 @@ bool Board::sow(Side s, int hole, Side& endSide, int& endHole) {
 	int sowing = kalah[s][onHole]; //move the beans from hole to temp storage
 	kalah[s][onHole] = 0; //no beans left in the hole
 
-	int correctPot = s;
+	int correctPot = s; // pot where a bean is allowed to be dropped into
 	while (sowing != 0)
 	{
 		if (s == NORTH) 
@@ -143,7 +143,7 @@ bool Board::sow(Side s, int hole, Side& endSide, int& endHole) {
 	return true;
 }
 
-bool Board::moveToPot(Side s, int hole, Side potOwner) {
+bool Board::moveToPot(Side s, int hole, Side potOwner) { // move the beans to your pot
 	if ((s != 0 && s != 1) || (hole > holes() || hole <= 0))
 	{
 		return false;
@@ -155,7 +155,7 @@ bool Board::moveToPot(Side s, int hole, Side potOwner) {
 	return true;
 }
 
-bool Board::setBeans(Side s, int hole, int beans) {
+bool Board::setBeans(Side s, int hole, int beans) { // set the beans in the specified hole to a certain number
 	if ((s != 0 && s != 1) || (hole > holes() || hole < 0) || (beans < 0))
 	{
 		return false;
