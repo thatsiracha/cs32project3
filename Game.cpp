@@ -11,7 +11,7 @@ Game::Game(const Board& b, Player* south, Player* north) :board(b) {
 	this->m_turn = SOUTH;
 }
 
-void Game::display() const {
+void Game::display() const { // show state of board visually
 	int numHoles = board.holes(); //# of holes
 	
 	cout << "Player 1 (south): " << southPlayer->name() << endl;
@@ -34,7 +34,7 @@ void Game::display() const {
 
 }
 
-void Game::status(bool& over, bool& hasWinner, Side& winner) const {
+void Game::status(bool& over, bool& hasWinner, Side& winner) const { // how many beans are in south's and north's pot? 
 	//cerr << "Game Status" << endl;
 
 	over = false;

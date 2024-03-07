@@ -39,4 +39,5 @@ int main()
 
 	mancala.play();
 
+	return 0;
 }
