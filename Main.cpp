@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Board.h"
 #include "Side.h"
+#include "Game.h"
 #include <iostream>
 #include <cassert>
 using namespace std;
@@ -27,6 +28,15 @@ void doPlayerTests()
 
 int main()
 {
-	doPlayerTests();
-	cout << "Passed all tests" << endl; //change this
+	// doPlayerTests();
+	// cout << "Passed all tests" << endl; 
+
+	Board b(3, 3);
+	HumanPlayer hp("Suraj");
+	BadPlayer bp("Computer");
+
+	Game mancala(b, &hp, &bp);
+
+	mancala.play();
+
 }
